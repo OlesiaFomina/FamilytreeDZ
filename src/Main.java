@@ -1,10 +1,13 @@
+import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
+
 
 public class Main {
-    public static void main(String[] args) {
-        Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
+    public static void main(String[] args) throws IOException {
+        String pathToFileTree = "src/family_tree.dat";
+
+    Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
         Human mother = new Human("Тимошкова Юлия Александровна", LocalDate.of(1978, 6, 1), null, Gender.FEMALE);
 
         Human grandfatherFather = new Human("Фомин Борис Алексеевич", LocalDate.of(1953, 2, 17), null, Gender.MALE);
@@ -20,13 +23,18 @@ public class Main {
 
         Human child1 = new Human("Фомина Олеся Валерьевна", LocalDate.of(2003, 5, 4), null, Gender.FEMALE);
         Human child2 = new Human("Фомина Анастасия Валерьевна", LocalDate.of(2008, 12, 6), null, Gender.FEMALE);
+        Human child3 = new Human("Ануфриева Ника Дмитриевна", LocalDate.of(2015, 1, 26), null, Gender.FEMALE);
+        Human child4 = new Human("Ануфриев Дарий Дмитриевич", LocalDate.of(2022, 9, 9), null, Gender.MALE);
 
         father.addChild(child1);
         father.addChild(child2);
         mother.addChild(child1);
         mother.addChild(child2);
+        mother.addChild(child3);
+        mother.addChild(child4);
 
-        FamilyTree familyTree = new FamilyTree();
+
+    FamilyTree familyTree = new FamilyTree();
         familyTree.addMember(father);
         familyTree.addMember(mother);
         familyTree.addMember(grandfatherFather);
@@ -35,9 +43,22 @@ public class Main {
         familyTree.addMember(grandmotherMother);
         familyTree.addMember(child1);
         familyTree.addMember(child2);
+        familyTree.addMember(child3);
+        familyTree.addMember(child4);
 
-        // поиск человека
-        Human foundPerson = familyTree.findMember("Тимошкова Юлия Александровна", LocalDate.of(1978, 6, 1), "Тимошков Александр Алексеевич", "Горланова Ольга Бориславовна");
+        // Сохранение древа\
+        FileHandler fileHandler = new FileHandler();
+            fileHandler.saveTree(familyTree, "family_tree.dat");
+
+        // Загрузка древа
+        FamilyTree loadedTree = fileHandler.loadTree("family_tree.dat");
+
+     //   поиск человека
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите ФИО человека: ");
+        String nameToFind = scanner.nextLine();
+
+        Human foundPerson = loadedTree.findMemberByName(nameToFind); // Изменен метод поиска
         if (foundPerson != null) {
             System.out.println("Найден: " + foundPerson.getName());
             System.out.println("Дата рождения: " + foundPerson.getDob());
@@ -58,3 +79,5 @@ public class Main {
         }
     }
 }
+
+

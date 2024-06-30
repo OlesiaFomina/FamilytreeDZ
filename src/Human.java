@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Human {
+class Human implements Serializable {
     private String name;
     private LocalDate dob;
     private LocalDate dod;
@@ -22,6 +23,7 @@ class Human {
     public String getName() {
         return name;
     }
+
     public LocalDate getDob() {
         return dob;
     }
@@ -50,4 +52,5 @@ class Human {
         return mother;
     }
 }
+
 
