@@ -1,11 +1,12 @@
-
 import java.io.Serializable;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
+
 import java.util.List;
 
+import java.util.Iterator;
 
-class FamilyTree implements Serializable {
+class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> members;
 
     public FamilyTree() {
@@ -24,4 +25,24 @@ class FamilyTree implements Serializable {
         }
         return null;
     }
+
+    public void sortByName() {
+        members.sort(new HumanComporatorByName());
+    }
+
+    public void sortByDob() {
+        members.sort(new HumanDobComparator());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(this);
+    }
+
+    public List<Human> getMembers() {
+        return members;
+    }
 }
+
+
+

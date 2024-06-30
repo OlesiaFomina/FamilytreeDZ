@@ -1,6 +1,8 @@
+
+
 import java.io.*;
 
-class FileHandler implements Writable {
+public class FileHandler implements Writable {
     @Override
     public void saveTree(FamilyTree familyTree, String pathToFileTree) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(pathToFileTree))) {

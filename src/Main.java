@@ -1,13 +1,17 @@
 import java.io.*;
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.*;
+
+
+
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
         String pathToFileTree = "src/family_tree.dat";
 
-    Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
+        Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
         Human mother = new Human("Тимошкова Юлия Александровна", LocalDate.of(1978, 6, 1), null, Gender.FEMALE);
 
         Human grandfatherFather = new Human("Фомин Борис Алексеевич", LocalDate.of(1953, 2, 17), null, Gender.MALE);
@@ -34,7 +38,7 @@ public class Main {
         mother.addChild(child4);
 
 
-    FamilyTree familyTree = new FamilyTree();
+        FamilyTree familyTree = new FamilyTree();
         familyTree.addMember(father);
         familyTree.addMember(mother);
         familyTree.addMember(grandfatherFather);
@@ -48,17 +52,17 @@ public class Main {
 
         // Сохранение древа\
         FileHandler fileHandler = new FileHandler();
-            fileHandler.saveTree(familyTree, "family_tree.dat");
+        fileHandler.saveTree(familyTree, "family_tree.dat");
 
         // Загрузка древа
         FamilyTree loadedTree = fileHandler.loadTree("family_tree.dat");
 
-     //   поиск человека
+        // Поиск человека с помощью ввода пользователя
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите ФИО человека: ");
         String nameToFind = scanner.nextLine();
 
-        Human foundPerson = loadedTree.findMemberByName(nameToFind); // Изменен метод поиска
+        Human foundPerson = loadedTree.findMemberByName(nameToFind);
         if (foundPerson != null) {
             System.out.println("Найден: " + foundPerson.getName());
             System.out.println("Дата рождения: " + foundPerson.getDob());
@@ -70,14 +74,27 @@ public class Main {
             }
             if (!foundPerson.getChildren().isEmpty()) {
                 System.out.println("Дети:");
-                for (Human child : foundPerson.getChildren()) {
+                // Сортировка детей по имени
+                List<Human> sortedChildren = new ArrayList<>(foundPerson.getChildren());
+                sortedChildren.sort(new HumanComporatorByName());
+                for (Human child : sortedChildren) {
                     System.out.println("- " + child.getName());
                 }
+                // Сортировка детей по дате рождения
+                sortedChildren.sort(new HumanDobComparator());
+                System.out.println("\n Дети, отсортированные по дате рождения:");
+                for (Human child : sortedChildren) {
+                    System.out.println("- " + child.getName() + " (" + child.getDob() + ")");
+                }
+
+                // Использование FamilyTreeIterator
+                System.out.println("\n Использование FamilyTreeIterator:");
+                for (Human member : loadedTree) {
+                    System.out.println(member.getName());
+                }
+            } else {
+                System.out.println("Человек не найден.");
             }
-        } else {
-            System.out.println("Человек не найден.");
         }
     }
 }
-
-
