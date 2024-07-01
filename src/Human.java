@@ -20,6 +20,14 @@ public class Human implements Named, Serializable {
         this.children = new ArrayList<>();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,17 +64,10 @@ public class Human implements Named, Serializable {
         return gender;
     }
 
-    @Override
-    public String toString() {
-        return "Human{" +
-                "name='" + name + '\'' +
-                ", dob=" + dob +
-                ", father=" + father +
-                ", mother=" + mother +
-                ", children=" + children +
-                ", gender=" + gender +
-                '}';
+
+
     }
-}
+
+
 
 

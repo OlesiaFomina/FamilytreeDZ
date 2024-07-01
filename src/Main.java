@@ -10,8 +10,48 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         String pathToFileTree = "src/family_tree.dat";
+        FamilyTree<Human> familyTree = initializeFamilyTree();
 
 
+        // Создание Presenter
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree);
+
+        // Запуск цикла взаимодействия с пользователем
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            // Вывод меню
+            System.out.println("\n Меню:");
+            System.out.println("1. Добавить нового члена семьи");
+            System.out.println("2. Найти человека");
+            System.out.println("3. Обновить данные о человеке");
+            System.out.println("4. Выход");
+            System.out.print("Введите номер действия: ");
+
+            // Обработка выбора пользователя
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Очистка буфера ввода
+
+            switch (choice) {
+                case 1:
+                    presenter.addMember();
+                    break;
+                case 2:
+                    presenter.findMember();
+                    break;
+                case 3:
+                    presenter.updateMember();
+                    break;
+                case 4:
+                    System.out.println("До свидания!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Неверный выбор.");
+            }
+        }
+    }
+    private static FamilyTree<Human> initializeFamilyTree() {
         Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
         Human mother = new Human("Тимошкова Юлия Александровна", LocalDate.of(1978, 6, 1), null, Gender.FEMALE);
 
@@ -57,7 +97,7 @@ public class Main {
 
         // Загрузка древа
         FamilyTree<Human> loadedTree = fileHandler.loadTree("family_tree.dat");
-
+/*
         // Поиск человека с помощью ввода пользователя
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите ФИО человека: ");
@@ -96,7 +136,9 @@ public class Main {
             } else {
                 System.out.println("Человек не найден.");
             }
-            scanner.close();
-        }
+           scanner.close();
+           */
+
+        return familyTree;
     }
 }
