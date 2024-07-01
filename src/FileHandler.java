@@ -2,9 +2,9 @@
 
 import java.io.*;
 
-public class FileHandler implements Writable {
+public class FileHandler <T extends Named> implements Writable <T> {
     @Override
-    public void saveTree(FamilyTree familyTree, String pathToFileTree) {
+    public void saveTree(FamilyTree <T> familyTree, String pathToFileTree) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(pathToFileTree))) {
             objectOutputStream.writeObject(familyTree);
         } catch (IOException e) {
@@ -13,9 +13,9 @@ public class FileHandler implements Writable {
     }
 
     @Override
-    public FamilyTree loadTree(String pathToFileTree) {
+    public FamilyTree <T> loadTree(String pathToFileTree) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(pathToFileTree))) {
-            return (FamilyTree) objectInputStream.readObject();
+            return (FamilyTree<T>) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

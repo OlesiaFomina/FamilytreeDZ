@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String pathToFileTree = "src/family_tree.dat";
 
+
         Human father = new Human("Фомин Валерий Борисович", LocalDate.of(1976, 2, 14), null, Gender.MALE);
         Human mother = new Human("Тимошкова Юлия Александровна", LocalDate.of(1978, 6, 1), null, Gender.FEMALE);
 
@@ -38,7 +39,7 @@ public class Main {
         mother.addChild(child4);
 
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         familyTree.addMember(father);
         familyTree.addMember(mother);
         familyTree.addMember(grandfatherFather);
@@ -55,7 +56,7 @@ public class Main {
         fileHandler.saveTree(familyTree, "family_tree.dat");
 
         // Загрузка древа
-        FamilyTree loadedTree = fileHandler.loadTree("family_tree.dat");
+        FamilyTree<Human> loadedTree = fileHandler.loadTree("family_tree.dat");
 
         // Поиск человека с помощью ввода пользователя
         Scanner scanner = new Scanner(System.in);
@@ -95,6 +96,7 @@ public class Main {
             } else {
                 System.out.println("Человек не найден.");
             }
+            scanner.close();
         }
     }
 }

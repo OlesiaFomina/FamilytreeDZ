@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Named, Serializable {
     private String name;
     private LocalDate dob;
     private LocalDate dod;
@@ -50,6 +50,22 @@ public class Human implements Serializable {
 
     public Human getMother() {
         return mother;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "name='" + name + '\'' +
+                ", dob=" + dob +
+                ", father=" + father +
+                ", mother=" + mother +
+                ", children=" + children +
+                ", gender=" + gender +
+                '}';
     }
 }
 

@@ -1,21 +1,23 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-class FamilyTreeIterator implements Iterator<Human> {
-    private FamilyTree familyTree;
+class FamilyTreeIterator<T extends Named> implements Iterator<T> {
+    private FamilyTree<T> familyTree;
     private int currentIndex = 0;
 
-    public FamilyTreeIterator(FamilyTree familyTree) {
+    public FamilyTreeIterator(FamilyTree<T> familyTree) {
+
         this.familyTree = familyTree;
     }
 
     @Override
     public boolean hasNext() {
+
         return currentIndex < familyTree.getMembers().size();
     }
 
     @Override
-    public Human next() {
+    public T next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }

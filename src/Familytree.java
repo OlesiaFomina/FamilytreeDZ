@@ -1,24 +1,21 @@
 import java.io.Serializable;
-
 import java.util.ArrayList;
-
 import java.util.List;
-
 import java.util.Iterator;
 
-class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> members;
+class FamilyTree <T extends Named> implements Serializable, Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
         members = new ArrayList<>();
     }
 
-    public void addMember(Human member) {
+    public void addMember(T member) {
         members.add(member);
     }
 
-    public Human findMemberByName(String name) {
-        for (Human member : members) {
+    public T findMemberByName(String name) {
+        for (T  member : members) {
             if (member.getName().equals(name)) {
                 return member;
             }
@@ -26,20 +23,13 @@ class FamilyTree implements Serializable, Iterable<Human> {
         return null;
     }
 
-    public void sortByName() {
-        members.sort(new HumanComporatorByName());
-    }
-
-    public void sortByDob() {
-        members.sort(new HumanDobComparator());
-    }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(this);
+    public Iterator<T> iterator() {
+        return new FamilyTreeIterator<>(this);
     }
 
-    public List<Human> getMembers() {
+    public List<T> getMembers() {
         return members;
     }
 }
